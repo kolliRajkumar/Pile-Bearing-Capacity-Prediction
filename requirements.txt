@@ -3,3 +3,4 @@ scikit-learn
 pandas
 pickle-mixin
 numpy
+xgboost
