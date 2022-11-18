@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Prediction of Pile Bearing Capacity!</title>
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="card" style="width: 100%; height: 100%; margin-top: 50px">
+                <div class="card-header" style="text-align: center">
+                    <h1>Prediction of Pile Bearing Capacity using Machine Learning</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" accept-charset="utf-8">
+                        <div class="row">
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Diameter of Pile(D)</b></label>
+                                <input type="text" class="form-control" id="Dia" name="Dia" placeholder="Enter Dia">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Depth of the first layer of soil embedded(X1)</b></label>
+                                <input type="text" class="form-control" id="1layer" name="1layer" placeholder="Enter X1">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Depth of the second layer of soil embedded(X2)</b></label>
+                                <input type="text" class="form-control" id="2layer" name="2layer" placeholder="Enter X2">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Depth of the third layer of soil embedded(X3)</b></label>
+                                <input type="text" class="form-control" id="3layer" name="3layer" placeholder="Enter X3">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>pile top elevation(Xp)</b></label>
+                                <input type="text" class="form-control" id="Pile top elev" name="Pile top elev" placeholder="Enter top Elv">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Ground Elevation(Xg)</b></label>
+                                <input type="text" class="form-control" id="Ground Elevation" name="Ground Elevation" placeholder="Enter Ground Elv">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Extra Pile Top Eelvation(Xt)</b></label>
+                                <input type="text" class="form-control" id="Extra Pile Top Elevation" name="Extra Pile Top Elevation" placeholder="Enter Pile Top Elv">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>Pile Tip Elevation(Xm)</b></label>
+                                <input type="text" class="form-control" id="Pile Tip Elevation" name="Pile Tip Elevation" placeholder="Enter Pile Tip Elv">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>SPT Blow Count @ Pile Shaft(Ns)</b></label>
+                                <input type="text" class="form-control" id="SPT Blow Count at Pile Shaft" name="SPT Blow Count at Pile Shaft" placeholder="Enter SPT Blow Count">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center">
+                                <label><b>SPT Blow Count @ Pile tip(Nt)</b></label>
+                                <input type="text" class="form-control" id="SPT Blow Count at Pile tip" name="SPT Blow Count at Pile tip" placeholder="Enter SPT Blow Count">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <button class="btn btn-primary form-control" onclick="send_data()">Predict</button>
+                            </div> 
+                        </div>
+                        
+                    </form>
+                    <br>
+
+                    <div class="col-md-12" style="text-align: center">
+                        <h3><span id="prediction"></span></h3>
+                    <div class="col-md-12" style="text-align: left">
+                        <a href="mailto:r.kolli@wmeglobal.com">Suggestions</a>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="center">
+                        <img src="{{user_image}}" width="750" height="550">
+                   </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="text-align: right">
+        <h3><span id="prediction"></span></h3>
+        <p class="text-white bg-dark">WME Digitla Innovation</p>
+        <label><b>Resource:</b></label>
+        <a Resource:+ href="https://www.mdpi.com/2076-3417/12/4/2126" target="_blank">Visit Article</a>
+    </div>
+
+    <script>
+        function form_handler(event) {
+            event.preventDefault();
+        }
+
+        function send_data()
+        {
+            document.querySelector('form').addEventListener('submit',form_handler);
+
+            var fd=new FormData(document.querySelector('form'));
+
+            var xhr= new XMLHttpRequest();
+
+            xhr.open('POST','/predict',true);
+            document.getElementById("prediction").innerHTML = 'Wait prediction Bearing Capacity!......';
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == XMLHttpRequest.DONE){
+                    document.getElementById('prediction').innerHTML='Predicted Pile Bearing Capacity: '+xhr.responseText+'kN';
+                }
+            };
+
+
+            xhr.onload = function(){};
+            xhr.send(fd);
+
+        }
+    </script>
+    
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
