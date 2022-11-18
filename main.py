@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import os
+import xgboost
 
 
 app=Flask(__name__)
